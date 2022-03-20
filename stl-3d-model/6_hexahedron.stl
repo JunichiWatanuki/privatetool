@@ -1,0 +1,86 @@
+solid STLB ATF 2.0.0.9000 COLOR=                                                  
+ facet normal 1 0 0
+  outer loop
+   vertex 14.5 0 14.5
+   vertex 14.5 0 -14.5
+   vertex 14.5 29 14.5
+  endloop
+ endfacet
+ facet normal 1 0 0
+  outer loop
+   vertex 14.5 29 14.5
+   vertex 14.5 0 -14.5
+   vertex 14.5 29 -14.5
+  endloop
+ endfacet
+ facet normal 0 0 1
+  outer loop
+   vertex -14.5 0 14.5
+   vertex 14.5 0 14.5
+   vertex -14.5 29 14.5
+  endloop
+ endfacet
+ facet normal 0 0 1
+  outer loop
+   vertex -14.5 29 14.5
+   vertex 14.5 0 14.5
+   vertex 14.5 29 14.5
+  endloop
+ endfacet
+ facet normal -1 0 0
+  outer loop
+   vertex -14.5 0 -14.5
+   vertex -14.5 0 14.5
+   vertex -14.5 29 -14.5
+  endloop
+ endfacet
+ facet normal -1 0 0
+  outer loop
+   vertex -14.5 29 -14.5
+   vertex -14.5 0 14.5
+   vertex -14.5 29 14.5
+  endloop
+ endfacet
+ facet normal 0 0 -1
+  outer loop
+   vertex 14.5 0 -14.5
+   vertex -14.5 0 -14.5
+   vertex 14.5 29 -14.5
+  endloop
+ endfacet
+ facet normal 0 0 -1
+  outer loop
+   vertex 14.5 29 -14.5
+   vertex -14.5 0 -14.5
+   vertex -14.5 29 -14.5
+  endloop
+ endfacet
+ facet normal 0 1 0
+  outer loop
+   vertex -14.5 29 -14.5
+   vertex -14.5 29 14.5
+   vertex 14.5 29 -14.5
+  endloop
+ endfacet
+ facet normal 0 1 0
+  outer loop
+   vertex 14.5 29 -14.5
+   vertex -14.5 29 14.5
+   vertex 14.5 29 14.5
+  endloop
+ endfacet
+ facet normal 0 -1 0
+  outer loop
+   vertex -14.5 0 -14.5
+   vertex 14.5 0 -14.5
+   vertex -14.5 0 14.5
+  endloop
+ endfacet
+ facet normal 0 -1 0
+  outer loop
+   vertex -14.5 0 14.5
+   vertex 14.5 0 -14.5
+   vertex 14.5 0 14.5
+  endloop
+ endfacet
+endsolid
