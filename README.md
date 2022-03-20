@@ -679,3 +679,74 @@ solid STLB ATF 2.0.0.9000 COLOR=
  endfacet
 endsolid
 ```
+
+
+# ローカル端末での環境構築  
+
+## 動作環境のイメージ図  
+※ 図に違和感がある理由は、新しいもの（Mermaid）で作図してみたことが原因。  
+
+```mermaid
+flowchart TD
+  subgraph C[ ]
+    direction LR
+    subgraph 192.168.10.0/24
+        direction TB
+        N101[192.168.10.101]
+        N102[192.168.10.102]
+        N103[192.168.10.103]
+    end
+    subgraph コンテナ
+        direction TB
+        Host1
+        Host2
+        Host3
+    end
+    subgraph 192.168.20.0/24
+        direction TB
+        N201[192.168.20.101]
+        N202[192.168.20.102]
+        N203[192.168.20.103]
+    end
+  end
+  A[操作用端末] --- B{Bridge}
+  B{Bridge} -->|Docker Network| C
+  N101 --- Host1
+  N102 --- Host2
+  N103 --- Host3
+  Host1 --- N201
+  Host2 --- N202
+  Host3 --- N203
+  
+  style A fill:#f9f,stroke:#333,stroke-width:4px
+  style C fill:#eee,stroke:#333,stroke-width:4px
+  style 192.168.10.0/24 fill:#ddd,stroke:#333,stroke-width:4px
+  style 192.168.20.0/24 fill:#ddd,stroke:#333,stroke-width:4px
+  style Host1 fill:#f9f,stroke:#333,stroke-width:4px
+  style Host2 fill:#f9f,stroke:#333,stroke-width:4px
+  style Host3 fill:#f9f,stroke:#333,stroke-width:4px
+  style コンテナ fill:#fee,stroke:#333,stroke-width:4px
+```
+
+
+# 環境起動までの手順  
+
+* git clone https://github.com/JunichiWatanuki/privatetool.git  
+* リポジトリのディレクトリ（`privatetool`）に移動する  
+* Docker-composeでコンテナイメージをビルドする  
+
+```
+docker-compose -f .github/actions/test3containersEnv/docker-compose.yml --env-file .github/actions/test3containersEnv/.env build
+```
+
+* ビルドが終わったらコンテナを起動する  
+
+```
+docker-compose -f .github/actions/test3containersEnv/docker-compose.yml --env-file .github/actions/test3containersEnv/.env up --abort-on-container-exit &
+```
+
+* 作業が終わったらプロセスをkillする  
+
+```
+killall docker-compose
+```
