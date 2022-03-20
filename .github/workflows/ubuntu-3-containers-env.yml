@@ -1,0 +1,39 @@
+name: docker-compose-3vm-env
+on:
+  workflow_dispatch:
+    inputs:
+      strIpv4:
+        description: '作成するユーザ名'
+        required: true
+        default: 'hogefuga'
+
+jobs:
+  run-test:
+    name: Run Docker-compose
+    # ubuntu環境で動作
+    runs-on: ubuntu-latest
+    # アクション定義
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+    - name: run test on docker-compose
+      run: |
+        pwd
+        ip addr show
+        ## GitHub-Actionsで実行するために、host1～host3のDockerFile内のCMD行（supervisord）を無効化し
+        ## SSH等のデーモンを起動しないようにする。
+        sed -i -e "s/^CMD nohup/#CMD nohup/g" .github/actions/test3containersEnv/host1/Dockerfile
+        sed -i -e "s/^CMD nohup/#CMD nohup/g" .github/actions/test3containersEnv/host2/Dockerfile
+        sed -i -e "s/^CMD nohup/#CMD nohup/g" .github/actions/test3containersEnv/host3/Dockerfile
+        ## GitHub-Actionsで実行するために、host1～host3のDockerFile内のENTRYPOINT行を有効化し
+        ## 試験シナリオが自動的に走るようにしておく。
+        sed -i -e "s/^#ENTRYPOINT/ENTRYPOINT/g" .github/actions/test3containersEnv/host1/Dockerfile
+        sed -i -e "s/^#ENTRYPOINT/ENTRYPOINT/g" .github/actions/test3containersEnv/host2/Dockerfile
+        sed -i -e "s/^#ENTRYPOINT/ENTRYPOINT/g" .github/actions/test3containersEnv/host3/Dockerfile
+        ## Docker-composeでコンテナを起動する。
+        docker-compose -f .github/actions/test3containersEnv/docker-compose.yml --env-file .github/actions/test3containersEnv/.env build
+        docker-compose -f .github/actions/test3containersEnv/docker-compose.yml --env-file .github/actions/test3containersEnv/.env up --abort-on-container-exit
+        docker network ls
+        docker network inspect trusted_nw
+        docker network inspect untrusted_nw
+      working-directory: ./

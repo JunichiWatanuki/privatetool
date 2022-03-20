@@ -1,0 +1,20 @@
+#!/usr/bin/expect
+set HOST [lindex $argv 0]
+set timeout 5
+spawn /bin/sh
+
+# ssh
+send "ssh ubuntu@${HOST} \r"
+expect -re "Are you sure you want to continue connecting"
+
+# yes
+send "yes\r"
+expect -re "ubuntu"
+
+# send password
+send "ubuntu\r"
+expect -re "ubuntu@host"
+send "echo \"ssh-rsa\ XXXXXXX\ ubuntu@host1\" >> .ssh/authorized_keys \r"
+
+# terminate expect
+exit 0

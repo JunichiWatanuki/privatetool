@@ -1,0 +1,13 @@
+# action.yml
+name: 'compose-run'
+description: '単純な環境を実行するだけのAction'
+runs:
+- name: run test on docker-compose
+  using: ./.github/actions/checkTestEnv
+  image: Dockerfile
+  run: |
+    pwd
+    docker-compose -f .github/actions/checkTestEnv/docker-compose.yml build
+    docker-compose -f .github/actions/checkTestEnv/docker-compose.yml up --abort-on-container-exit
+#    docker network ls
+  working-directory: ./

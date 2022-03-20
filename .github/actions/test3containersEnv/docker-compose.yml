@@ -1,0 +1,117 @@
+version: "3"
+
+services:
+  host1:
+    build:
+      context: ./${NODE1}
+      #args:
+      #  - HTTP_PROXY=$HTTP_PROXY
+      #  - http_proxy=$http_proxy
+      #  - HTTPS_PROXY=$HTTPS_PROXY
+      #  - https_proxy=$https_proxy
+      #  - NO_PROXY=$NO_PROXY
+      #  - no_proxy=$no_proxy
+    #environment:
+    #  - HTTP_PROXY=$HTTP_PROXY
+    #  - http_proxy=$http_proxy
+    #  - HTTPS_PROXY=$HTTPS_PROXY
+    #  - https_proxy=$https_proxy
+    #  - NO_PROXY=$NO_PROXY
+    #  - no_proxy=$no_proxy
+    container_name: '${COMPOSE_PROJECT_NAME}-${NODE1}'
+    tty: true
+    #restart: 'always'
+    hostname: host1
+    networks:
+        trusted_nw:
+          ipv4_address: 192.168.10.101
+        untrusted_nw:
+          ipv4_address: 192.168.20.101
+    ports:
+      - "${NODE1_SSH_HOSTACCESS_PORT}:22"
+      - "${NODE1_WWW_HOSTACCESS_PORT}:80"
+    volumes:
+      - ~/shareDocker:/home
+    privileged: true
+    command: /usr/bin/supervisord
+  host2:
+    build:
+      context: ./${NODE2}
+      #args:
+      #  - HTTP_PROXY=$HTTP_PROXY
+      #  - http_proxy=$http_proxy
+      #  - HTTPS_PROXY=$HTTPS_PROXY
+      #  - https_proxy=$https_proxy
+      #  - NO_PROXY=$NO_PROXY
+      #  - no_proxy=$no_proxy
+    #environment:
+    #  - HTTP_PROXY=$HTTP_PROXY
+    #  - http_proxy=$http_proxy
+    #  - HTTPS_PROXY=$HTTPS_PROXY
+    #  - https_proxy=$https_proxy
+    #  - NO_PROXY=$NO_PROXY
+    #  - no_proxy=$no_proxy
+    container_name: '${COMPOSE_PROJECT_NAME}-${NODE2}'
+    tty: true
+    #restart: 'always'
+    hostname: host2
+    networks:
+        trusted_nw:
+          ipv4_address: 192.168.10.102
+        untrusted_nw:
+          ipv4_address: 192.168.20.102
+    ports:
+      - "${NODE2_SSH_HOSTACCESS_PORT}:22"
+      - "${NODE2_WWW_HOSTACCESS_PORT}:80"
+    volumes:
+      - ~/shareDocker:/home
+    privileged: true
+    command: /usr/bin/supervisord
+  host3:
+    build:
+      context: ./${NODE3}
+      #args:
+      #  - HTTP_PROXY=$HTTP_PROXY
+      #  - http_proxy=$http_proxy
+      #  - HTTPS_PROXY=$HTTPS_PROXY
+      #  - https_proxy=$https_proxy
+      #  - NO_PROXY=$NO_PROXY
+      #  - no_proxy=$no_proxy
+    #environment:
+    #  - HTTP_PROXY=$HTTP_PROXY
+    #  - http_proxy=$http_proxy
+    #  - HTTPS_PROXY=$HTTPS_PROXY
+    #  - https_proxy=$https_proxy
+    #  - NO_PROXY=$NO_PROXY
+    #  - no_proxy=$no_proxy
+    container_name: '${COMPOSE_PROJECT_NAME}-${NODE3}'
+    tty: true
+    #restart: 'always'
+    hostname: host3
+    networks:
+        trusted_nw:
+          ipv4_address: 192.168.10.103
+        untrusted_nw:
+          ipv4_address: 192.168.20.103
+    ports:
+      - "${NODE3_SSH_HOSTACCESS_PORT}:22"
+      - "${NODE3_WWW_HOSTACCESS_PORT}:80"
+    volumes:
+      - ~/shareDocker:/home
+    privileged: true
+    command: /usr/bin/supervisord
+
+
+networks:
+  trusted_nw:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.10.0/24
+  untrusted_nw:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.20.0/24
