@@ -142,8 +142,8 @@ dl {
 blockquote {
   border-left: 4px solid #0088ff;
   padding: 0 3px;
-  background-color: black;
-  color: #000000; }
+  background-color: fdf6e3;
+  color: #fdf6e3; }
   blockquote > :first-child {
     margin-top: 0; }
   blockquote > :last-child {
